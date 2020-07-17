@@ -35,11 +35,9 @@ this is amazing!!!
         const method = myForm.getAttribute("method")
         const xhr = new XMLHttpRequest()
         xhr.open(method, url)
-        xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
-        xhr.setRequestHeader("X-Requested_With", "XMLHttpRequest")
         xhr.onload = function(){
             const serverResponse = xhr.response
-            console.log(xhr.status, serverResponse)
+            //console.log(serverResponse)
             const tweetsEl = document.getElementById("tweets")
             loadTweets(tweetsEl)
 
@@ -49,31 +47,30 @@ this is amazing!!!
     }
 
     const tweetCreateFormEl = document.getElementById("tweet-create-form")
-
     tweetCreateFormEl.addEventListener("submit", handleTweetCreateFormDidSubmit)
 
     const tweetsEl = document.getElementById("tweets")
 
     function loadTweets(tweetsElement){
         const xhr = new XMLHttpRequest()
-    const method = 'GET'
-    const url = "/tweets"
-    const responseType = "json"
-    xhr.responseType = responseType
-    xhr.open(method, url)
-    xhr.onload = function() {
-        const serverResponse = xhr.response
-        var listedItems = serverResponse.response //array
-        var finalTweetStr = ""
-        var i;
-        for(i=0; i<listedItems.length; i++){
-            var tweetObj = listedItems[i]
-            var currentItem = formatTweetElement(tweetObj)
-            finalTweetStr += currentItem
+        const method = 'GET'
+        const url = "/tweets"
+        const responseType = "json"
+        xhr.responseType = responseType
+        xhr.open(method, url)
+        xhr.onload = function() {
+            const serverResponse = xhr.response
+            const listedItems = serverResponse.response //array
+            var finalTweetStr = ""
+            var i;
+            for(i=0; i<listedItems.length; i++){
+                var tweetObj = listedItems[i]
+                var currentItem = formatTweetElement(tweetObj)
+                finalTweetStr += currentItem
+            }
+            tweetsElement.innerHTML = finalTweetStr
         }
-        tweetsElement.innerHTML = finalTweetStr
-    }
-    xhr.send()
+        xhr.send()
 
     }
 
@@ -82,6 +79,7 @@ this is amazing!!!
 
     function handleDidLike (tweet_id, currentCount){
         console.log(tweet_id, currentCount)
+        return
     }
     function likeBtn(tweet) {
         return "<button class='btn btn-primary btn-sm' onclick=handleDidLike(" +
