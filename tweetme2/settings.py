@@ -26,7 +26,7 @@ SECRET_KEY = 'r)^aee0&($blw@-dkzc6u!$(7s0tutp$v4msu*-@(m-u2(e!!f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh']
+ALLOWED_HOSTS = ['127.0.0.1', '.cfe.sh', 'localhost']
 LOGIN_URL = "/login"
 
 MAX_TWEET_LENGTH = 240
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # third-party
+    'corsheaders',
     'rest_framework',
     # internal
     'tweets',
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -127,6 +129,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+CORS_ORIGIN_ALLOW_ALL = True #Any website has access to my api
+
+CORS_URLS_REGEX = r'^/api/.*$'
 
 DEFAULT_RENDERER_CLASSES = [
         'rest_framework.renderers.JSONRenderer',
