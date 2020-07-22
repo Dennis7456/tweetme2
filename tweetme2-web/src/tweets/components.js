@@ -1,6 +1,28 @@
 import React, {useEffect, useState} from 'react'
 
 import {loadTweets} from '../lookup'
+
+
+export function TweetsComponent(props){
+    const textAreaRef = React.createRef()
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        const newVal = textAreaRef.current.value
+        console.log(newVal)
+        textAreaRef.current.value = ''
+    }
+    return <div className={props.className}>
+        <div className='col-12 mb-3'>
+        <form onSubmit={handleSubmit}>
+            <textarea ref={textAreaRef} required={true} className='form-control' name='tweet'>
+
+            </textarea>
+            <button type='submit' className='btn btn-primary my-3'>Tweet</button>
+        </form>
+        </div>
+        <TweetsList />
+        </div>
+}
   
   export function TweetsList(props) {
     const [tweets, setTweets] = useState([])
@@ -14,9 +36,6 @@ import {loadTweets} from '../lookup'
       }
     }
       loadTweets(myCallback)
-      const tweetItems = [{"content": 123}, {"content": "Hello world"}]
-      setTweets(tweetItems)
-  
     }, [])
     return tweets.map((item, index)=>{
       return <Tweet tweet={item} key={index} className='my-5 py-5 border bg-white text-dark' key={`${index}-{item.id}`}/>
